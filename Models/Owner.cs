@@ -8,5 +8,8 @@
         public string Gym { get; set; }
         public Country Country { get; set; }
 
+
+        public ICollection<Pokemon> Pokemons { get; set; }
+
     }
 }

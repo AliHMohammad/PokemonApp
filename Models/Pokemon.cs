@@ -11,6 +11,11 @@ namespace PokemonApp.Models
 
         //One-to-many relation
         public ICollection<Review> Reviews { get; set; }
+
+        //Many-to-many relation
+        public ICollection<Category> Categories { get; set; }
+
+        public ICollection<Owner> owners { get; set; }
     }
 }
 
