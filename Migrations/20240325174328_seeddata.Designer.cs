@@ -12,8 +12,8 @@ using PokemonApp.Data;
 namespace PokemonApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240325170011_initial")]
-    partial class initial
+    [Migration("20240325174328_seeddata")]
+    partial class seeddata
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,45 +55,50 @@ namespace PokemonApp.Migrations
                     b.ToTable("OwnerPokemon");
                 });
 
-            modelBuilder.Entity("PokemonApp.Models.Category", b =>
+            modelBuilder.Entity("PokemonApp.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("name");
 
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("PokemonApp.Models.Country", b =>
+            modelBuilder.Entity("PokemonApp.Entities.Country", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("íd");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("name");
 
                     b.HasKey("Id");
 
                     b.ToTable("Countries");
                 });
 
-            modelBuilder.Entity("PokemonApp.Models.Owner", b =>
+            modelBuilder.Entity("PokemonApp.Entities.Owner", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
@@ -102,15 +107,18 @@ namespace PokemonApp.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("firstname");
 
                     b.Property<string>("Gym")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("gym");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("lastname");
 
                     b.HasKey("Id");
 
@@ -119,31 +127,49 @@ namespace PokemonApp.Migrations
                     b.ToTable("Owners");
                 });
 
-            modelBuilder.Entity("PokemonApp.Models.Pokemon", b =>
+            modelBuilder.Entity("PokemonApp.Entities.Pokemon", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("birthdate");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("name");
 
                     b.HasKey("Id");
 
                     b.ToTable("Pokemons");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BirthDate = new DateTime(2000, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Ali"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BirthDate = new DateTime(2001, 6, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Berfin"
+                        });
                 });
 
-            modelBuilder.Entity("PokemonApp.Models.Review", b =>
+            modelBuilder.Entity("PokemonApp.Entities.Review", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
@@ -151,18 +177,21 @@ namespace PokemonApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Rating")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("rating");
 
                     b.Property<int>("ReviewerId")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("title");
 
                     b.HasKey("Id");
 
@@ -173,21 +202,24 @@ namespace PokemonApp.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("PokemonApp.Models.Reviewer", b =>
+            modelBuilder.Entity("PokemonApp.Entities.Reviewer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("firstname");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("lastname");
 
                     b.HasKey("Id");
 
@@ -196,13 +228,13 @@ namespace PokemonApp.Migrations
 
             modelBuilder.Entity("CategoryPokemon", b =>
                 {
-                    b.HasOne("PokemonApp.Models.Category", null)
+                    b.HasOne("PokemonApp.Entities.Category", null)
                         .WithMany()
                         .HasForeignKey("CategoriesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PokemonApp.Models.Pokemon", null)
+                    b.HasOne("PokemonApp.Entities.Pokemon", null)
                         .WithMany()
                         .HasForeignKey("PokemonsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -211,22 +243,22 @@ namespace PokemonApp.Migrations
 
             modelBuilder.Entity("OwnerPokemon", b =>
                 {
-                    b.HasOne("PokemonApp.Models.Pokemon", null)
+                    b.HasOne("PokemonApp.Entities.Pokemon", null)
                         .WithMany()
                         .HasForeignKey("PokemonsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PokemonApp.Models.Owner", null)
+                    b.HasOne("PokemonApp.Entities.Owner", null)
                         .WithMany()
                         .HasForeignKey("ownersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PokemonApp.Models.Owner", b =>
+            modelBuilder.Entity("PokemonApp.Entities.Owner", b =>
                 {
-                    b.HasOne("PokemonApp.Models.Country", "Country")
+                    b.HasOne("PokemonApp.Entities.Country", "Country")
                         .WithMany("Owners")
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -235,15 +267,15 @@ namespace PokemonApp.Migrations
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("PokemonApp.Models.Review", b =>
+            modelBuilder.Entity("PokemonApp.Entities.Review", b =>
                 {
-                    b.HasOne("PokemonApp.Models.Pokemon", "Pokemon")
+                    b.HasOne("PokemonApp.Entities.Pokemon", "Pokemon")
                         .WithMany("Reviews")
                         .HasForeignKey("PokemonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PokemonApp.Models.Reviewer", "Reviewer")
+                    b.HasOne("PokemonApp.Entities.Reviewer", "Reviewer")
                         .WithMany("Reviews")
                         .HasForeignKey("ReviewerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -254,17 +286,17 @@ namespace PokemonApp.Migrations
                     b.Navigation("Reviewer");
                 });
 
-            modelBuilder.Entity("PokemonApp.Models.Country", b =>
+            modelBuilder.Entity("PokemonApp.Entities.Country", b =>
                 {
                     b.Navigation("Owners");
                 });
 
-            modelBuilder.Entity("PokemonApp.Models.Pokemon", b =>
+            modelBuilder.Entity("PokemonApp.Entities.Pokemon", b =>
                 {
                     b.Navigation("Reviews");
                 });
 
-            modelBuilder.Entity("PokemonApp.Models.Reviewer", b =>
+            modelBuilder.Entity("PokemonApp.Entities.Reviewer", b =>
                 {
                     b.Navigation("Reviews");
                 });

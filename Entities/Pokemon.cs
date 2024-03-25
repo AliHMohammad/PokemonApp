@@ -1,13 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PokemonApp.Models
+namespace PokemonApp.Entities
 {
     public class Pokemon
     {
         [Key]
+        [Column("id")]
         public int Id { get; set; }
 
+        [Column("name")]
         public string Name { get; set; }
+
+        [Column("birthdate")]
         public DateTime BirthDate { get; set; }
 
         //One-to-many relation
