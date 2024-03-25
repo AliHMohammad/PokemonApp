@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+//Husk at add dine IRepository og Repositories løbende i Program.cs
 builder.Services.AddScoped<IPokemonRepository, PokemonRepository>();
 
 
