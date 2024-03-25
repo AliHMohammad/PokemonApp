@@ -20,10 +20,16 @@ builder.Services.AddSwaggerGen();
 
 //Vi henter connnectionString fra vores user secret ud fra key "default"
 var connectionString = builder.Configuration.GetConnectionString("default");
+var serverVersion = ServerVersion.AutoDetect(connectionString);
+
 builder.Services.AddDbContext<DataContext>(options =>
 {
     //Vi giver connectionString som argument
-    options.UseMySQL(connectionString);
+    options.UseMySql(connectionString, serverVersion)
+    //Nedenstående kun til dev. Slet ved deployment
+    .LogTo(Console.WriteLine, LogLevel.Information)
+    .EnableSensitiveDataLogging()
+    .EnableDetailedErrors();
 });
 
 
