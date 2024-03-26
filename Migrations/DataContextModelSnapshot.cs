@@ -107,7 +107,8 @@ namespace PokemonApp.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CountryId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("country_id");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -194,7 +195,8 @@ namespace PokemonApp.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("PokemonId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("pokemon_id");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int")
@@ -202,6 +204,10 @@ namespace PokemonApp.Migrations
 
                     b.Property<int>("ReviewerId")
                         .HasColumnType("int");
+
+                    b.Property<int>("ReviwerId")
+                        .HasColumnType("int")
+                        .HasColumnName("reviewer_id");
 
                     b.Property<string>("Text")
                         .IsRequired()

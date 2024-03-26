@@ -92,14 +92,14 @@ namespace PokemonApp.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     gym = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CountryId = table.Column<int>(type: "int", nullable: false)
+                    country_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Owners", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Owners_Countries_CountryId",
-                        column: x => x.CountryId,
+                        name: "FK_Owners_Countries_country_id",
+                        column: x => x.country_id,
                         principalTable: "Countries",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -142,15 +142,16 @@ namespace PokemonApp.Migrations
                     text = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     rating = table.Column<int>(type: "int", nullable: false),
+                    reviewer_id = table.Column<int>(type: "int", nullable: false),
                     ReviewerId = table.Column<int>(type: "int", nullable: false),
-                    PokemonId = table.Column<int>(type: "int", nullable: false)
+                    pokemon_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reviews", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Reviews_Pokemons_PokemonId",
-                        column: x => x.PokemonId,
+                        name: "FK_Reviews_Pokemons_pokemon_id",
+                        column: x => x.pokemon_id,
                         principalTable: "Pokemons",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -205,7 +206,7 @@ namespace PokemonApp.Migrations
 
             migrationBuilder.InsertData(
                 table: "Owners",
-                columns: new[] { "id", "CountryId", "firstname", "gym", "lastname" },
+                columns: new[] { "id", "country_id", "firstname", "gym", "lastname" },
                 values: new object[] { 1, 1, "Uncle", "Sats", "Tom" });
 
             migrationBuilder.CreateIndex(
@@ -219,14 +220,14 @@ namespace PokemonApp.Migrations
                 column: "ownersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Owners_CountryId",
+                name: "IX_Owners_country_id",
                 table: "Owners",
-                column: "CountryId");
+                column: "country_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_PokemonId",
+                name: "IX_Reviews_pokemon_id",
                 table: "Reviews",
-                column: "PokemonId");
+                column: "pokemon_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_ReviewerId",
