@@ -10,7 +10,7 @@ namespace PokemonApp.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            var sqlStatements = File.ReadAllText("./Sql/SeedData.sql");
+            var sqlStatements = File.ReadAllText("./SeedData.sql");
             if (sqlStatements == "" || sqlStatements == null) throw new Exception("SQL Could not be read. Try again");
 
             migrationBuilder.Sql(sqlStatements);
