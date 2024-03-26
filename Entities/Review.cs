@@ -20,10 +20,10 @@ namespace PokemonApp.Entities
         public int Rating { get; set; }
 
         //many-to-one
-        [Column("reviewer_id")]
+        
         public Reviewer Reviewer { get; set; }
 
-        [Column("pokemon_id")]
+        
         public Pokemon Pokemon { get; set; }
     }
 }

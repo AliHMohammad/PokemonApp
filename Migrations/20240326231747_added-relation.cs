@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PokemonApp.Migrations
 {
     /// <inheritdoc />
-    public partial class seeddata : Migration
+    public partial class addedrelation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,14 +36,14 @@ namespace PokemonApp.Migrations
                 name: "Countries",
                 columns: table => new
                 {
-                    íd = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Countries", x => x.íd);
+                    table.PrimaryKey("PK_Countries", x => x.id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -101,7 +101,7 @@ namespace PokemonApp.Migrations
                         name: "FK_Owners_Countries_CountryId",
                         column: x => x.CountryId,
                         principalTable: "Countries",
-                        principalColumn: "íd",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
@@ -189,13 +189,24 @@ namespace PokemonApp.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.InsertData(
+                table: "Countries",
+                columns: new[] { "id", "name" },
+                values: new object[] { 1, "Denmark" });
+
+            migrationBuilder.InsertData(
                 table: "Pokemons",
                 columns: new[] { "id", "birthdate", "name" },
                 values: new object[,]
                 {
                     { 1, new DateTime(2000, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ali" },
-                    { 2, new DateTime(2001, 6, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), "Berfin" }
+                    { 2, new DateTime(2001, 6, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), "Berfin" },
+                    { 3, new DateTime(1999, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "Jonathan" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Owners",
+                columns: new[] { "id", "CountryId", "firstname", "gym", "lastname" },
+                values: new object[] { 1, 1, "Uncle", "Sats", "Tom" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CategoryPokemon_PokemonsId",

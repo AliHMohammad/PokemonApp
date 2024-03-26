@@ -12,8 +12,8 @@ using PokemonApp.Data;
 namespace PokemonApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240325174328_seeddata")]
-    partial class seeddata
+    [Migration("20240326231747_added-relation")]
+    partial class addedrelation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,7 +79,7 @@ namespace PokemonApp.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("íd");
+                        .HasColumnName("id");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
@@ -91,6 +91,13 @@ namespace PokemonApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Countries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Denmark"
+                        });
                 });
 
             modelBuilder.Entity("PokemonApp.Entities.Owner", b =>
@@ -125,6 +132,16 @@ namespace PokemonApp.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("Owners");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CountryId = 1,
+                            FirstName = "Uncle",
+                            Gym = "Sats",
+                            LastName = "Tom"
+                        });
                 });
 
             modelBuilder.Entity("PokemonApp.Entities.Pokemon", b =>
@@ -161,6 +178,12 @@ namespace PokemonApp.Migrations
                             Id = 2,
                             BirthDate = new DateTime(2001, 6, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Berfin"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BirthDate = new DateTime(1999, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Jonathan"
                         });
                 });
 

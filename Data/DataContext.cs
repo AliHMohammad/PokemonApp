@@ -24,11 +24,20 @@ namespace PokemonApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Pokemon>().HasData(
-                new Pokemon() { Id = 1, Name = "Ali", BirthDate = new DateTime(2000, 12, 9) },
-                new Pokemon() { Id = 2, Name = "Berfin", BirthDate = new DateTime(2001, 6, 11) }
-            );
 
+            var country1 = new Country() { Id = 1, Name = "Denmark" };
+
+            var owner1 = new Owner() { Id = 1, FirstName = "Uncle", LastName = "Tom", Gym = "Sats", CountryId = 1 };
+
+            var pokemon1 = new Pokemon() { Id = 1, Name = "Ali", BirthDate = new DateTime(2000, 12, 9), };
+            var pokemon2 = new Pokemon() { Id = 2, Name = "Berfin", BirthDate = new DateTime(2001, 6, 11) };
+            var pokemon3 = new Pokemon() { Id = 3, Name = "Jonathan", BirthDate = new DateTime(1999, 4, 22) };
+
+
+
+            modelBuilder.Entity<Country>().HasData(country1);
+            modelBuilder.Entity<Owner>().HasData(owner1);
+            modelBuilder.Entity<Pokemon>().HasData(pokemon1, pokemon2, pokemon3);
         }
 
     }

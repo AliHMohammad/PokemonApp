@@ -19,7 +19,7 @@ namespace PokemonApp.Entities
         [Column("gym")]
         public string Gym { get; set; }
 
-        [Column("country_id")]
+        public int CountryId { get; set; }
         public Country Country { get; set; }
 
 

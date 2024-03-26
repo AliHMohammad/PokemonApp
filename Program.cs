@@ -53,11 +53,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-
+//Kør dine migrations ved opstart af api-server
 using var scope = app.Services.CreateScope();
 await using var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
 await dbContext.Database.MigrateAsync();
 
 
-
 app.Run();
+
+
