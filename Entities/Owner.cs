@@ -25,8 +25,10 @@ namespace PokemonApp.Entities
         public int CountryId { get; set; }
         public Country Country { get; set; }
 
-        //many-to-one
+        //one-to-many
         public ICollection<Pokemon> Pokemons { get; set; }
 
     }
 }
+
+
