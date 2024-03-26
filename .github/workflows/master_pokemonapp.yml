@@ -69,11 +69,14 @@ jobs:
     needs: deploy
 
     steps:
-      - name: Install dotnet ef
-        run: dotnet tool install --global dotnet-ef
+    - name: Install dotnet ef
+      run: dotnet tool install --global dotnet-ef
 
-      - name: Run migration
-        run: dotnet ef database update --project $(Build.SourcesDirectory)\PokemonApp.csproj
+    - name: Navigate to the project directory
+      run: cd $GITHUB_WORKSPACE/PokemonApp
+
+    - name: Run migration
+      run: dotnet ef database update --project PokemonApp.csproj
       
 
           
