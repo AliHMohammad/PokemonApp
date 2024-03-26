@@ -54,7 +54,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 
-
+using var scope = app.Services.CreateScope();
+await using var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+await dbContext.Database.MigrateAsync();
 
 
 
