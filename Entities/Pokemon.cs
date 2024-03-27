@@ -15,6 +15,9 @@ namespace PokemonApp.Entities
         [Column("birthdate")]
         public DateTime BirthDate { get; set; }
 
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+
         //One-to-many relation
         public ICollection<Review> Reviews { get; set; }
 
