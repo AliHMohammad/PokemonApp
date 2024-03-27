@@ -1,11 +1,12 @@
-﻿using PokemonApp.Entities;
+﻿using PokemonApp.DTOs;
+using PokemonApp.Entities;
 
 namespace PokemonApp.Interfaces
 {
     public interface IPokemonService
     {
 
-        Task<IEnumerable<Pokemon>> GetPokemons();
+        Task<IEnumerable<ResponsePokemonDTO>> GetPokemons();
         Task<Pokemon> GetSinglePokemon(int id);
     }
 }

@@ -1,6 +1,7 @@
 ﻿
 //SKAL VÆRE AspNetCore.Mvc!!!
 using Microsoft.AspNetCore.Mvc;
+using PokemonApp.DTOs;
 using PokemonApp.Entities;
 using PokemonApp.ExceptionHandlers;
 using PokemonApp.Interfaces;
@@ -21,7 +22,7 @@ namespace PokemonApp.Controllers
 
         [HttpGet]
         [ProducesResponseType(200)]
-        public async Task<ActionResult<IEnumerable<Pokemon>>> GetPokemons()
+        public async Task<ActionResult<IEnumerable<ResponsePokemonDTO>>> GetPokemons()
         {
             var pokemons = await _pokemonService.GetPokemons();
             return Ok(pokemons);

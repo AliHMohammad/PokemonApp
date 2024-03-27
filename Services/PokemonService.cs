@@ -1,6 +1,8 @@
-﻿using PokemonApp.Entities;
+﻿using PokemonApp.DTOs;
+using PokemonApp.Entities;
 using PokemonApp.ExceptionHandlers;
 using PokemonApp.Interfaces;
+using PokemonApp.Mappers;
 
 namespace PokemonApp.Services
 {
@@ -13,9 +15,10 @@ namespace PokemonApp.Services
             this._pokemonRepository = pokemonRepository;
         }
 
-        public async Task<IEnumerable<Pokemon>> GetPokemons()
+        public async Task<IEnumerable<ResponsePokemonDTO>> GetPokemons()
         {
-            return await _pokemonRepository.GetPokemons();
+            var pokemons = await _pokemonRepository.GetPokemons();
+            return pokemons.Select(pokemon => pokemon.ToDTO());
         }
 
         public async Task<Pokemon> GetSinglePokemon(int id)
