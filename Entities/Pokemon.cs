@@ -25,6 +25,8 @@ namespace PokemonApp.Entities
         public ICollection<Category> Categories { get; set; }
 
         public ICollection<Owner> owners { get; set; }
+
+
     }
 }
 

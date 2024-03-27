@@ -40,5 +40,12 @@ namespace PokemonApp.Services
             return pokemondb.ToDTO();
         }
 
+        public async Task<ResponsePokemonDTO> CreatePokemon(RequestPokemonDTO requestPokemonDTO)
+        {
+            Pokemon createdPokemon = await _pokemonRepository.CreatePokemon(requestPokemonDTO.ToEntity());
+
+            return createdPokemon.ToDTO();
+        }
+
     }
 }

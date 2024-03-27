@@ -14,5 +14,14 @@ namespace PokemonApp.Mappers
             );
         }
 
+        public static Pokemon ToEntity(this RequestPokemonDTO pokemonDTO)
+        {
+            return new Pokemon()
+            {
+                Name = pokemonDTO.Name,
+                BirthDate = pokemonDTO.BirthDate
+            };
+        }
+
     }
 }

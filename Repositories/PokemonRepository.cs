@@ -33,5 +33,16 @@ namespace PokemonApp.Repositories
         }
 
 
+        public async Task<Pokemon> CreatePokemon(Pokemon pokemon)
+        {
+            //Vi opretter og gemmer
+            var createdPokemon = await _dataContext.Pokemons.AddAsync(pokemon);
+            await _dataContext.SaveChangesAsync();
+
+            //Vi returnerer den nyoprettet entitet med .Entity
+            return createdPokemon.Entity;
+        }
+
+
     }
 }

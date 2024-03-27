@@ -51,5 +51,21 @@ namespace PokemonApp.Controllers
 
             return Ok(pokemon);
         }
+
+
+        [HttpPost]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(201)]
+        public async Task<ActionResult<ResponsePokemonDTO>> CreatePokemon(RequestPokemonDTO requestPokemonDTO)
+        {
+            var pokemonResponse = await _pokemonService.CreatePokemon(requestPokemonDTO);
+
+            // Udvidet ActionResult. Modtager 3 parametre:
+            // 1. Navnet på metoden hvor man tilgår denne nye resurse på,
+            // 2. "location"-header sat til URI til den nyoprettet resurse 
+            // 3. ResponseBody, i vores tilfælde DTO'en
+            return CreatedAtAction(nameof(GetSinglePokemon), new { id = pokemonResponse.Id }, pokemonResponse);
+        }
     }
 }
+

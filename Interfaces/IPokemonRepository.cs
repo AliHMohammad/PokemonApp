@@ -6,7 +6,7 @@ namespace PokemonApp.Interfaces
     {
         Task<List<Pokemon>> GetPokemons();
         Task<Pokemon?> GetSinglePokemon(int id);
-
         Task DeletePokemonByEntity(Pokemon pokemon);
+        Task<Pokemon> CreatePokemon(Pokemon pokemon);
     }
 }
