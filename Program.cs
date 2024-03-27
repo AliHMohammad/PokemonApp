@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PokemonApp.Data;
+using PokemonApp.ExceptionHandlers;
 using PokemonApp.Interfaces;
 using PokemonApp.Repositories;
 using PokemonApp.Services;
@@ -13,6 +14,12 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IPokemonRepository, PokemonRepository>();
 builder.Services.AddScoped<IPokemonService, PokemonService>();
 
+//Tilføj Custom Exceptionhandlers
+builder.Services.AddExceptionHandler<BadRequestExceptionHandler>();
+builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
+builder.Services.AddProblemDetails();
+
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -23,7 +30,7 @@ builder.Services.AddSwaggerGen();
 // Skriv den før builder.Build()
 
 //Vi henter connnectionString fra vores user secret ud fra key "default"
-var connectionString = builder.Configuration.GetConnectionString("default");
+var connectionString = builder.Configuration.GetConnectionString("local");
 var serverVersion = ServerVersion.AutoDetect(connectionString);
 
 builder.Services.AddDbContext<DataContext>(options =>
@@ -50,10 +57,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
+
+// Vi bruger global exceptionhandlers
+app.UseExceptionHandler();
+
 
 //Kør dine migrations ved opstart af api-server
 using var scope = app.Services.CreateScope();

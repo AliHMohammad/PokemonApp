@@ -20,16 +20,9 @@ namespace PokemonApp.Repositories
             return await _dataContext.Pokemons.OrderBy(p => p.Id).ToListAsync();
         }
 
-        public async Task<Pokemon> GetSinglePokemon(int id)
+        public async Task<Pokemon?> GetSinglePokemon(int id)
         {
-            var result = await _dataContext.Pokemons.FindAsync(id);
-
-            if (result == null)
-            {
-                throw new Exception($"Pokemon with ID {id} not found");
-            }
-
-            return result;
+            return await _dataContext.Pokemons.FindAsync(id);
         }
 
 

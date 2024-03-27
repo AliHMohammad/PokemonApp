@@ -1,4 +1,5 @@
 ﻿using PokemonApp.Entities;
+using PokemonApp.ExceptionHandlers;
 using PokemonApp.Interfaces;
 
 namespace PokemonApp.Services
@@ -19,7 +20,11 @@ namespace PokemonApp.Services
 
         public async Task<Pokemon> GetSinglePokemon(int id)
         {
-            return await _pokemonRepository.GetSinglePokemon(id);
+            Pokemon? pokemon = await _pokemonRepository.GetSinglePokemon(id);
+
+            if (pokemon is null) throw new NotFoundException($"Pokemon with ID {id} not found");
+
+            return pokemon;
         }
 
     }

@@ -2,6 +2,7 @@
 //SKAL VÆRE AspNetCore.Mvc!!!
 using Microsoft.AspNetCore.Mvc;
 using PokemonApp.Entities;
+using PokemonApp.ExceptionHandlers;
 using PokemonApp.Interfaces;
 
 namespace PokemonApp.Controllers
@@ -23,11 +24,9 @@ namespace PokemonApp.Controllers
         public async Task<ActionResult<IEnumerable<Pokemon>>> GetPokemons()
         {
             var pokemons = await _pokemonService.GetPokemons();
-
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
             return Ok(pokemons);
         }
+
 
         [HttpGet("{id:int}")]
         [ProducesResponseType(200)]
@@ -35,16 +34,9 @@ namespace PokemonApp.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<Pokemon>> GetSinglePokemon(int id)
         {
-            if (id < 1) return BadRequest("Id must be greater than 0");
+            if (id < 1) throw new BadRequestException($"Pokemon with ID {id} not found");
 
-            try
-            {
-                return Ok(await _pokemonService.GetSinglePokemon(id));
-            }
-            catch (Exception e)
-            {
-                return NotFound(e.Message);
-            }
+            return Ok(await _pokemonService.GetSinglePokemon(id));
         }
     }
 }
