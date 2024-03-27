@@ -10,23 +10,41 @@ namespace PokemonApp.Controllers
     [ApiController]
     public class PokemonController : Controller
     {
-        private readonly IPokemonRepository _pokemonRepository;
+        private readonly IPokemonService _pokemonService;
 
-        public PokemonController(IPokemonRepository pokemonRepository)
+        public PokemonController(IPokemonService pokemonService)
         {
-            this._pokemonRepository = pokemonRepository;
+            this._pokemonService = pokemonService;
         }
 
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(ICollection<Pokemon>))]
-        public IActionResult getPokemons()
+        [ProducesResponseType(200)]
+        public async Task<ActionResult<IEnumerable<Pokemon>>> GetPokemons()
         {
-            var pokemons = _pokemonRepository.GetPokemons();
+            var pokemons = await _pokemonService.GetPokemons();
 
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             return Ok(pokemons);
+        }
+
+        [HttpGet("{id:int}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<Pokemon>> GetSinglePokemon(int id)
+        {
+            if (id < 1) return BadRequest("Id must be greater than 0");
+
+            try
+            {
+                return Ok(await _pokemonService.GetSinglePokemon(id));
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
         }
     }
 }

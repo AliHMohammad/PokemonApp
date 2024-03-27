@@ -2,9 +2,10 @@
 
 namespace PokemonApp.Interfaces
 {
-    public interface IPokemonRepository
+    public interface IPokemonService
     {
-        Task<List<Pokemon>> GetPokemons();
+
+        Task<IEnumerable<Pokemon>> GetPokemons();
         Task<Pokemon> GetSinglePokemon(int id);
     }
 }

@@ -2,14 +2,16 @@ using Microsoft.EntityFrameworkCore;
 using PokemonApp.Data;
 using PokemonApp.Interfaces;
 using PokemonApp.Repositories;
+using PokemonApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 
-//Husk at add dine IRepository og Repositories løbende i Program.cs
+//Husk at tilføje dine dependency injections (både service og repository) løbende i Program.cs
 builder.Services.AddScoped<IPokemonRepository, PokemonRepository>();
+builder.Services.AddScoped<IPokemonService, PokemonService>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
