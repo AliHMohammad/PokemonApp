@@ -22,21 +22,21 @@ namespace PokemonApp.Migrations
                 keyColumn: "id",
                 keyValue: 1,
                 column: "created_at",
-                value: new DateTime(2024, 3, 27, 21, 9, 59, 561, DateTimeKind.Local).AddTicks(8498));
+                value: DateTime.Now);
 
             migrationBuilder.UpdateData(
                 table: "Pokemons",
                 keyColumn: "id",
                 keyValue: 2,
                 column: "created_at",
-                value: new DateTime(2024, 3, 27, 21, 9, 59, 561, DateTimeKind.Local).AddTicks(8546));
+                value: DateTime.Now);
 
             migrationBuilder.UpdateData(
                 table: "Pokemons",
                 keyColumn: "id",
                 keyValue: 3,
                 column: "created_at",
-                value: new DateTime(2024, 3, 27, 21, 9, 59, 561, DateTimeKind.Local).AddTicks(8549));
+                value: DateTime.Now);
         }
 
         /// <inheritdoc />

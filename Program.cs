@@ -30,7 +30,7 @@ builder.Services.AddSwaggerGen();
 // Skriv den før builder.Build()
 
 //Vi henter connnectionString fra vores user secret ud fra key "default"
-var connectionString = builder.Configuration.GetConnectionString("local");
+var connectionString = builder.Configuration.GetConnectionString("default");
 var serverVersion = ServerVersion.AutoDetect(connectionString);
 
 builder.Services.AddDbContext<DataContext>(options =>
@@ -67,6 +67,7 @@ app.UseExceptionHandler();
 //Kør dine migrations ved opstart af api-server
 using var scope = app.Services.CreateScope();
 await using var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+await dbContext.Database.EnsureDeletedAsync();
 await dbContext.Database.MigrateAsync();
 
 
