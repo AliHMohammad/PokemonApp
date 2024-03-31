@@ -21,7 +21,6 @@ namespace PokemonApp.Controllers
 
 
         [HttpGet]
-        [ProducesResponseType(200)]
         public async Task<ActionResult<IEnumerable<ResponsePokemonDTO>>> GetPokemons()
         {
             return Ok(await _pokemonService.GetPokemons());
@@ -29,9 +28,6 @@ namespace PokemonApp.Controllers
 
 
         [HttpGet("{id:int}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(404)]
         public async Task<ActionResult<Pokemon>> GetSinglePokemon(int id)
         {
             if (id < 1) throw new BadRequestException($"Pokemon with ID {id} not found");
@@ -40,9 +36,6 @@ namespace PokemonApp.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(400)]
         public async Task<ActionResult<ResponsePokemonDTO>> DeletePokemon(int id)
         {
             if (id < 1) throw new BadRequestException($"Pokemon with ID {id} not found");
@@ -54,8 +47,6 @@ namespace PokemonApp.Controllers
 
 
         [HttpPost]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(201)]
         public async Task<ActionResult<ResponsePokemonDTO>> CreatePokemon(RequestPokemonDTO requestPokemonDTO)
         {
             var pokemonResponse = await _pokemonService.CreatePokemon(requestPokemonDTO);

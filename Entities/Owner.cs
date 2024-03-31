@@ -26,7 +26,7 @@ namespace PokemonApp.Entities
         public Country Country { get; set; }
 
         //one-to-many
-        public ICollection<Pokemon> Pokemons { get; set; }
+        public ICollection<Pokemon> Pokemons { get; set; } = new HashSet<Pokemon>();
 
     }
 }

@@ -22,7 +22,9 @@ namespace PokemonApp.Repositories
 
         public async Task<Pokemon?> GetSinglePokemon(int id)
         {
-            return await _dataContext.Pokemons.FindAsync(id);
+            return await _dataContext.Pokemons
+                .Include(p => p.Owner)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task DeletePokemonByEntity(Pokemon pokemon)
@@ -33,14 +35,16 @@ namespace PokemonApp.Repositories
         }
 
 
-        public async Task<Pokemon> CreatePokemon(Pokemon pokemon)
+        public async Task<Pokemon?> CreatePokemon(Pokemon pokemon)
         {
             //Vi opretter og gemmer
             var createdPokemon = await _dataContext.Pokemons.AddAsync(pokemon);
             await _dataContext.SaveChangesAsync();
 
-            //Vi returnerer den nyoprettet entitet med .Entity
-            return createdPokemon.Entity;
+            // Vi kalder getSingle, så vi får vores .Include p.Owner på vores resultat.
+            return await GetSinglePokemon(createdPokemon.Entity.Id);
+
+            // Returnerer vi blot createdPokemon.Entity, får vi p.Owner som null.
         }
 
 

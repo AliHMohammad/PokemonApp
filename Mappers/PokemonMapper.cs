@@ -19,7 +19,8 @@ namespace PokemonApp.Mappers
             return new Pokemon()
             {
                 Name = pokemonDTO.Name,
-                BirthDate = pokemonDTO.BirthDate
+                BirthDate = pokemonDTO.BirthDate,
+                OwnerId = pokemonDTO.OwnerId
             };
         }
 

@@ -24,7 +24,8 @@ namespace PokemonApp.Services
         public async Task<Pokemon> GetSinglePokemon(int id)
         {
             //Da vores resultat kan være null, laver vi en null operator og smider en custom NotFoundException
-            Pokemon pokemon = await _pokemonRepository.GetSinglePokemon(id) ?? throw new NotFoundException($"Pokemon with ID {id} not found");
+            Pokemon pokemon = await _pokemonRepository.GetSinglePokemon(id)
+                ?? throw new NotFoundException($"Pokemon with ID {id} not found");
 
             return pokemon;
         }
@@ -32,7 +33,8 @@ namespace PokemonApp.Services
         public async Task<ResponsePokemonDTO> DeletePokemon(int id)
         {
             //Finder pokemon, der skal slettes
-            Pokemon pokemondb = await _pokemonRepository.GetSinglePokemon(id) ?? throw new NotFoundException($"Pokemon with id {id} could not be found");
+            Pokemon pokemondb = await _pokemonRepository.GetSinglePokemon(id)
+                ?? throw new NotFoundException($"Pokemon with id {id} could not be found");
 
             //Vi sletter
             await _pokemonRepository.DeletePokemonByEntity(pokemondb);
@@ -42,7 +44,8 @@ namespace PokemonApp.Services
 
         public async Task<ResponsePokemonDTO> CreatePokemon(RequestPokemonDTO requestPokemonDTO)
         {
-            Pokemon createdPokemon = await _pokemonRepository.CreatePokemon(requestPokemonDTO.ToEntity());
+            Pokemon createdPokemon = await _pokemonRepository.CreatePokemon(requestPokemonDTO.ToEntity())
+                ?? throw new BadRequestException("Could not create new pokemon");
 
             return createdPokemon.ToDTO();
         }

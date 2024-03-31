@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -8,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PokemonApp.Migrations
 {
     /// <inheritdoc />
-    public partial class addedrelation : Migration
+    public partial class pokemonowner : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -43,22 +44,6 @@ namespace PokemonApp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Countries", x => x.id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Pokemons",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    name = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    birthdate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Pokemons", x => x.id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -100,6 +85,30 @@ namespace PokemonApp.Migrations
                         name: "FK_Owners_Countries_country_id",
                         column: x => x.country_id,
                         principalTable: "Countries",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Pokemons",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    birthdate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    owner_id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pokemons", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Pokemons_Owners_owner_id",
+                        column: x => x.owner_id,
+                        principalTable: "Owners",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -163,50 +172,29 @@ namespace PokemonApp.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
-                name: "OwnerPokemon",
-                columns: table => new
-                {
-                    PokemonsId = table.Column<int>(type: "int", nullable: false),
-                    ownersId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OwnerPokemon", x => new { x.PokemonsId, x.ownersId });
-                    table.ForeignKey(
-                        name: "FK_OwnerPokemon_Owners_ownersId",
-                        column: x => x.ownersId,
-                        principalTable: "Owners",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OwnerPokemon_Pokemons_PokemonsId",
-                        column: x => x.PokemonsId,
-                        principalTable: "Pokemons",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
             migrationBuilder.InsertData(
                 table: "Countries",
                 columns: new[] { "id", "name" },
                 values: new object[] { 1, "Denmark" });
 
             migrationBuilder.InsertData(
-                table: "Pokemons",
-                columns: new[] { "id", "birthdate", "name" },
+                table: "Owners",
+                columns: new[] { "id", "country_id", "firstname", "gym", "lastname" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2000, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ali" },
-                    { 2, new DateTime(2001, 6, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), "Berfin" },
-                    { 3, new DateTime(1999, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "Jonathan" }
+                    { 1, 1, "Uncle", "Sats", "Tom" },
+                    { 2, 1, "Bette", "Sats", "Hansen" }
                 });
 
             migrationBuilder.InsertData(
-                table: "Owners",
-                columns: new[] { "id", "country_id", "firstname", "gym", "lastname" },
-                values: new object[] { 1, 1, "Uncle", "Sats", "Tom" });
+                table: "Pokemons",
+                columns: new[] { "id", "birthdate", "created_at", "name", "owner_id" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2000, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 31, 15, 47, 33, 829, DateTimeKind.Local).AddTicks(7748), "Ali", 1 },
+                    { 2, new DateTime(2001, 6, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 31, 15, 47, 33, 829, DateTimeKind.Local).AddTicks(7803), "Berfin", 2 },
+                    { 3, new DateTime(1999, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 31, 15, 47, 33, 829, DateTimeKind.Local).AddTicks(7806), "Jonathan", 2 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CategoryPokemon_PokemonsId",
@@ -214,14 +202,14 @@ namespace PokemonApp.Migrations
                 column: "PokemonsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OwnerPokemon_ownersId",
-                table: "OwnerPokemon",
-                column: "ownersId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Owners_country_id",
                 table: "Owners",
                 column: "country_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pokemons_owner_id",
+                table: "Pokemons",
+                column: "owner_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_pokemon_id",
@@ -241,22 +229,19 @@ namespace PokemonApp.Migrations
                 name: "CategoryPokemon");
 
             migrationBuilder.DropTable(
-                name: "OwnerPokemon");
-
-            migrationBuilder.DropTable(
                 name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Owners");
-
-            migrationBuilder.DropTable(
                 name: "Pokemons");
 
             migrationBuilder.DropTable(
                 name: "Reviewers");
+
+            migrationBuilder.DropTable(
+                name: "Owners");
 
             migrationBuilder.DropTable(
                 name: "Countries");

@@ -2,7 +2,8 @@
 {
     public record RequestPokemonDTO(
             string Name,
-            DateTime BirthDate
+            DateTime BirthDate,
+            int OwnerId
         );
 
 

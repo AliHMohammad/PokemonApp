@@ -21,10 +21,12 @@ namespace PokemonApp.Entities
 
         //many-to-one
         [Column("reviewer_id")]
+        [ForeignKey("Reviewer")]
         public int ReviwerId { get; set; }
         public Reviewer Reviewer { get; set; }
 
         [Column("pokemon_id")]
+        [ForeignKey("Pokemon")]
         public int PokemonId { get; set; }
         public Pokemon Pokemon { get; set; }
     }

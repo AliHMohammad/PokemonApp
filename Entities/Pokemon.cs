@@ -19,12 +19,16 @@ namespace PokemonApp.Entities
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         //One-to-many relation
-        public ICollection<Review> Reviews { get; set; }
+        public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
 
         //Many-to-many relation
-        public ICollection<Category> Categories { get; set; }
+        public ICollection<Category> Categories { get; set; } = new HashSet<Category>();
 
-        public ICollection<Owner> owners { get; set; }
+        //Many-to-one
+        [Column("owner_id")]
+        [ForeignKey("Owner")]
+        public int OwnerId { get; set; }
+        public Owner Owner { get; set; }
 
 
     }

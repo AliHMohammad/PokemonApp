@@ -37,21 +37,6 @@ namespace PokemonApp.Migrations
                     b.ToTable("CategoryPokemon");
                 });
 
-            modelBuilder.Entity("OwnerPokemon", b =>
-                {
-                    b.Property<int>("PokemonsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ownersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PokemonsId", "ownersId");
-
-                    b.HasIndex("ownersId");
-
-                    b.ToTable("OwnerPokemon");
-                });
-
             modelBuilder.Entity("PokemonApp.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -139,6 +124,14 @@ namespace PokemonApp.Migrations
                             FirstName = "Uncle",
                             Gym = "Sats",
                             LastName = "Tom"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CountryId = 1,
+                            FirstName = "Bette",
+                            Gym = "Sats",
+                            LastName = "Hansen"
                         });
                 });
 
@@ -164,7 +157,13 @@ namespace PokemonApp.Migrations
                         .HasColumnType("longtext")
                         .HasColumnName("name");
 
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("int")
+                        .HasColumnName("owner_id");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Pokemons");
 
@@ -173,22 +172,25 @@ namespace PokemonApp.Migrations
                         {
                             Id = 1,
                             BirthDate = new DateTime(2000, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2024, 3, 27, 21, 9, 59, 561, DateTimeKind.Local).AddTicks(8498),
-                            Name = "Ali"
+                            CreatedAt = new DateTime(2024, 3, 31, 15, 47, 33, 829, DateTimeKind.Local).AddTicks(7748),
+                            Name = "Ali",
+                            OwnerId = 1
                         },
                         new
                         {
                             Id = 2,
                             BirthDate = new DateTime(2001, 6, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2024, 3, 27, 21, 9, 59, 561, DateTimeKind.Local).AddTicks(8546),
-                            Name = "Berfin"
+                            CreatedAt = new DateTime(2024, 3, 31, 15, 47, 33, 829, DateTimeKind.Local).AddTicks(7803),
+                            Name = "Berfin",
+                            OwnerId = 2
                         },
                         new
                         {
                             Id = 3,
                             BirthDate = new DateTime(1999, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2024, 3, 27, 21, 9, 59, 561, DateTimeKind.Local).AddTicks(8549),
-                            Name = "Jonathan"
+                            CreatedAt = new DateTime(2024, 3, 31, 15, 47, 33, 829, DateTimeKind.Local).AddTicks(7806),
+                            Name = "Jonathan",
+                            OwnerId = 2
                         });
                 });
 
@@ -274,21 +276,6 @@ namespace PokemonApp.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OwnerPokemon", b =>
-                {
-                    b.HasOne("PokemonApp.Entities.Pokemon", null)
-                        .WithMany()
-                        .HasForeignKey("PokemonsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PokemonApp.Entities.Owner", null)
-                        .WithMany()
-                        .HasForeignKey("ownersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("PokemonApp.Entities.Owner", b =>
                 {
                     b.HasOne("PokemonApp.Entities.Country", "Country")
@@ -298,6 +285,17 @@ namespace PokemonApp.Migrations
                         .IsRequired();
 
                     b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("PokemonApp.Entities.Pokemon", b =>
+                {
+                    b.HasOne("PokemonApp.Entities.Owner", "Owner")
+                        .WithMany("Pokemons")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("PokemonApp.Entities.Review", b =>
@@ -322,6 +320,11 @@ namespace PokemonApp.Migrations
             modelBuilder.Entity("PokemonApp.Entities.Country", b =>
                 {
                     b.Navigation("Owners");
+                });
+
+            modelBuilder.Entity("PokemonApp.Entities.Owner", b =>
+                {
+                    b.Navigation("Pokemons");
                 });
 
             modelBuilder.Entity("PokemonApp.Entities.Pokemon", b =>
