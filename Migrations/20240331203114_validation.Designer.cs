@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PokemonApp.Data;
 
@@ -11,9 +12,11 @@ using PokemonApp.Data;
 namespace PokemonApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240331203114_validation")]
+    partial class validation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,10 +98,6 @@ namespace PokemonApp.Migrations
                         .HasColumnType("int")
                         .HasColumnName("country_id");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_at");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("longtext")
@@ -125,7 +124,6 @@ namespace PokemonApp.Migrations
                         {
                             Id = 1,
                             CountryId = 1,
-                            CreatedAt = new DateTime(2024, 3, 31, 23, 25, 21, 920, DateTimeKind.Local).AddTicks(532),
                             FirstName = "Uncle",
                             Gym = "Sats",
                             LastName = "Tom"
@@ -134,7 +132,6 @@ namespace PokemonApp.Migrations
                         {
                             Id = 2,
                             CountryId = 1,
-                            CreatedAt = new DateTime(2024, 3, 31, 23, 25, 21, 920, DateTimeKind.Local).AddTicks(580),
                             FirstName = "Bette",
                             Gym = "Sats",
                             LastName = "Hansen"
@@ -178,7 +175,7 @@ namespace PokemonApp.Migrations
                         {
                             Id = 1,
                             BirthDate = new DateTime(2000, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2024, 3, 31, 23, 25, 21, 920, DateTimeKind.Local).AddTicks(583),
+                            CreatedAt = new DateTime(2024, 3, 31, 22, 31, 13, 598, DateTimeKind.Local).AddTicks(9838),
                             Name = "Ali",
                             OwnerId = 1
                         },
@@ -186,7 +183,7 @@ namespace PokemonApp.Migrations
                         {
                             Id = 2,
                             BirthDate = new DateTime(2001, 6, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2024, 3, 31, 23, 25, 21, 920, DateTimeKind.Local).AddTicks(590),
+                            CreatedAt = new DateTime(2024, 3, 31, 22, 31, 13, 598, DateTimeKind.Local).AddTicks(9880),
                             Name = "Berfin",
                             OwnerId = 2
                         },
@@ -194,7 +191,7 @@ namespace PokemonApp.Migrations
                         {
                             Id = 3,
                             BirthDate = new DateTime(1999, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2024, 3, 31, 23, 25, 21, 920, DateTimeKind.Local).AddTicks(593),
+                            CreatedAt = new DateTime(2024, 3, 31, 22, 31, 13, 598, DateTimeKind.Local).AddTicks(9883),
                             Name = "Jonathan",
                             OwnerId = 2
                         });

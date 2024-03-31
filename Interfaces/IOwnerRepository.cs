@@ -9,3 +9,4 @@ namespace PokemonApp.Interfaces
         Task<bool> OwnerExists(int id);
     }
 }
+

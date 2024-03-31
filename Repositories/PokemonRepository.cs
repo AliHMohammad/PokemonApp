@@ -35,13 +35,13 @@ namespace PokemonApp.Repositories
         }
 
 
-        public async Task<Pokemon?> CreatePokemon(Pokemon pokemon)
+        public async Task<Pokemon> CreatePokemon(Pokemon pokemon)
         {
             //Vi opretter og gemmer
             var createdPokemon = await _dataContext.Pokemons.AddAsync(pokemon);
             await _dataContext.SaveChangesAsync();
 
-            // Vi kalder getSingle, så vi får vores .Include p.Owner på vores resultat.
+            // Vi kalder getSingle, så vi får vores .Include p.Owner (relation) på vores resultat.
             return await GetSinglePokemon(createdPokemon.Entity.Id);
 
             // Returnerer vi blot createdPokemon.Entity, får vi p.Owner som null.

@@ -19,9 +19,13 @@ namespace PokemonApp.Entities
         [Column("gym")]
         public string Gym { get; set; }
 
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+
         //many-to-one
 
         [Column("country_id")]
+        [ForeignKey("Country")]
         public int CountryId { get; set; }
         public Country Country { get; set; }
 

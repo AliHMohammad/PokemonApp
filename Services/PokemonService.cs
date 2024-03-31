@@ -27,13 +27,13 @@ namespace PokemonApp.Services
             return pokemons.Select(pokemon => pokemon.ToDTO());
         }
 
-        public async Task<Pokemon> GetSinglePokemon(int id)
+        public async Task<ResponsePokemonDTO> GetSinglePokemon(int id)
         {
             //Da vores resultat kan være null, laver vi en null operator og smider en custom NotFoundException
             Pokemon pokemon = await _pokemonRepository.GetSinglePokemon(id)
                 ?? throw new NotFoundException($"Pokemon with ID {id} not found");
 
-            return pokemon;
+            return pokemon.ToDTO();
         }
 
         public async Task<ResponsePokemonDTO> DeletePokemon(int id)

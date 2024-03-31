@@ -10,6 +10,7 @@ namespace PokemonApp.Entities
         public int Id { get; set; }
 
         [Column("name")]
+        [MinLength(5)]
         public string Name { get; set; }
 
         [Column("birthdate")]

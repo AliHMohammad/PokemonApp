@@ -2,7 +2,6 @@
 //SKAL VÆRE AspNetCore.Mvc!!!
 using Microsoft.AspNetCore.Mvc;
 using PokemonApp.DTOs;
-using PokemonApp.Entities;
 using PokemonApp.ExceptionHandlers;
 using PokemonApp.Interfaces;
 
@@ -10,7 +9,7 @@ namespace PokemonApp.Controllers
 {
     [Route("api/pokemons")]
     [ApiController]
-    public class PokemonController : Controller
+    public class PokemonController : ControllerBase
     {
         private readonly IPokemonService _pokemonService;
 
@@ -28,7 +27,7 @@ namespace PokemonApp.Controllers
 
         //Undlad :int, hvis din parameter er en string
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Pokemon>> GetSinglePokemon(int id)
+        public async Task<ActionResult<ResponsePokemonDTO>> GetSinglePokemon(int id)
         {
             if (id < 1) throw new NotFoundException($"Pokemon with ID {id} not found");
 
@@ -40,9 +39,9 @@ namespace PokemonApp.Controllers
         {
             if (id < 1) throw new NotFoundException($"Pokemon with ID {id} not found");
 
-            var pokemon = await _pokemonService.DeletePokemon(id);
+            var deletedPokemon = await _pokemonService.DeletePokemon(id);
 
-            return Ok(pokemon);
+            return Ok(deletedPokemon);
         }
 
 
@@ -58,6 +57,7 @@ namespace PokemonApp.Controllers
             return CreatedAtAction(nameof(GetSinglePokemon), new { id = pokemonResponse.Id }, pokemonResponse);
         }
 
+
         [HttpPut("{id:int}")]
         public async Task<ActionResult<ResponsePokemonDTO>> UpdatePokemon([FromBody] RequestPokemonDTO requestPokemonDTO, int id)
         {
@@ -65,8 +65,6 @@ namespace PokemonApp.Controllers
 
             return Ok(await _pokemonService.UpdatePokemon(requestPokemonDTO, id));
         }
-
-
 
 
     }

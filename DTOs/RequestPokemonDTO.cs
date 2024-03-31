@@ -5,6 +5,5 @@
             DateTime BirthDate,
             int OwnerId
         );
-
-
 }
+
