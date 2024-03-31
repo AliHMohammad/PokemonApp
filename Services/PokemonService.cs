@@ -1,4 +1,5 @@
-﻿using PokemonApp.DTOs;
+﻿using PokemonApp.Data;
+using PokemonApp.DTOs;
 using PokemonApp.Entities;
 using PokemonApp.ExceptionHandlers;
 using PokemonApp.Interfaces;
@@ -10,11 +11,14 @@ namespace PokemonApp.Services
     {
         private readonly IPokemonRepository _pokemonRepository;
         private readonly IOwnerRepository _ownerRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PokemonService(IPokemonRepository pokemonRepository, IOwnerRepository ownerRepository)
+        public PokemonService(IPokemonRepository pokemonRepository, IOwnerRepository ownerRepository, IUnitOfWork unitOfWork)
         {
             _pokemonRepository = pokemonRepository;
             _ownerRepository = ownerRepository;
+            // Bruges til transactions
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<ResponsePokemonDTO>> GetPokemons()
@@ -53,11 +57,11 @@ namespace PokemonApp.Services
         }
 
 
-
+        // Eksempel på en transaction.
         public async Task<ResponsePokemonDTO> UpdatePokemon(RequestPokemonDTO requestPokemonDTO, int id)
         {
-
-
+            // Begynd en transaction.
+            using var transaction = _unitOfWork.BeginTransaction();
 
             var pokemonDb = await _pokemonRepository.GetSinglePokemon(id)
                 ?? throw new NotFoundException($"Pokemon with id {id} not found");
@@ -66,7 +70,7 @@ namespace PokemonApp.Services
             pokemonDb.BirthDate = requestPokemonDTO.BirthDate;
 
             // Ikke er i request body, så defaulter den til 0, i stedet for null i spring boot
-            // Hvis ownerId er med, så gå i if-statement
+            // Hvis ownerId er med i requestbody, så opdater den, ellers, skip.
             if (requestPokemonDTO.OwnerId != 0)
             {
                 var ownerId = requestPokemonDTO.OwnerId;
@@ -77,7 +81,22 @@ namespace PokemonApp.Services
                 pokemonDb.OwnerId = ownerId;
             }
 
-            await _pokemonRepository.SaveChanges();
+            // Vi gemmer en ændring i db
+            await _unitOfWork.SaveChangesAsync();
+
+            // Hvis der var mere logik med en anden entitet, så udfør det her
+            // Gem ovenstående ændring med await _unitOfWork.SaveChangesAsync();
+            // I tilfælde af exception, så husk at kald transaction.Rollback(), inden du kaster den.
+
+            ///if (blabla)
+            ///{
+            ///    transaction.Rollback();
+            ///    throw new BadRequestException($"Blablabla");
+            ///}
+
+
+            // Vi afslutter med at commit vores transaction inden vi returnerer til controller
+            transaction.Commit();
             return (await _pokemonRepository.GetSinglePokemon(id)).ToDTO();
         }
 

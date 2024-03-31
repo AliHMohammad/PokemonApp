@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PokemonApp.Migrations
 {
     /// <inheritdoc />
-    public partial class pokemonowner : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -151,7 +151,6 @@ namespace PokemonApp.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     rating = table.Column<int>(type: "int", nullable: false),
                     reviewer_id = table.Column<int>(type: "int", nullable: false),
-                    ReviewerId = table.Column<int>(type: "int", nullable: false),
                     pokemon_id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -164,8 +163,8 @@ namespace PokemonApp.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Reviews_Reviewers_ReviewerId",
-                        column: x => x.ReviewerId,
+                        name: "FK_Reviews_Reviewers_reviewer_id",
+                        column: x => x.reviewer_id,
                         principalTable: "Reviewers",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -191,9 +190,9 @@ namespace PokemonApp.Migrations
                 columns: new[] { "id", "birthdate", "created_at", "name", "owner_id" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2000, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 31, 15, 47, 33, 829, DateTimeKind.Local).AddTicks(7748), "Ali", 1 },
-                    { 2, new DateTime(2001, 6, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 31, 15, 47, 33, 829, DateTimeKind.Local).AddTicks(7803), "Berfin", 2 },
-                    { 3, new DateTime(1999, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 31, 15, 47, 33, 829, DateTimeKind.Local).AddTicks(7806), "Jonathan", 2 }
+                    { 1, new DateTime(2000, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 31, 20, 8, 1, 577, DateTimeKind.Local).AddTicks(2432), "Ali", 1 },
+                    { 2, new DateTime(2001, 6, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 31, 20, 8, 1, 577, DateTimeKind.Local).AddTicks(2474), "Berfin", 2 },
+                    { 3, new DateTime(1999, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 31, 20, 8, 1, 577, DateTimeKind.Local).AddTicks(2477), "Jonathan", 2 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -217,9 +216,9 @@ namespace PokemonApp.Migrations
                 column: "pokemon_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_ReviewerId",
+                name: "IX_Reviews_reviewer_id",
                 table: "Reviews",
-                column: "ReviewerId");
+                column: "reviewer_id");
         }
 
         /// <inheritdoc />

@@ -47,10 +47,7 @@ namespace PokemonApp.Repositories
             // Returnerer vi blot createdPokemon.Entity, får vi p.Owner som null.
         }
 
-        public async Task SaveChanges()
-        {
-            await _dataContext.SaveChangesAsync();
-        }
+
 
 
     }

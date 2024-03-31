@@ -172,7 +172,7 @@ namespace PokemonApp.Migrations
                         {
                             Id = 1,
                             BirthDate = new DateTime(2000, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2024, 3, 31, 15, 47, 33, 829, DateTimeKind.Local).AddTicks(7748),
+                            CreatedAt = new DateTime(2024, 3, 31, 20, 8, 1, 577, DateTimeKind.Local).AddTicks(2432),
                             Name = "Ali",
                             OwnerId = 1
                         },
@@ -180,7 +180,7 @@ namespace PokemonApp.Migrations
                         {
                             Id = 2,
                             BirthDate = new DateTime(2001, 6, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2024, 3, 31, 15, 47, 33, 829, DateTimeKind.Local).AddTicks(7803),
+                            CreatedAt = new DateTime(2024, 3, 31, 20, 8, 1, 577, DateTimeKind.Local).AddTicks(2474),
                             Name = "Berfin",
                             OwnerId = 2
                         },
@@ -188,7 +188,7 @@ namespace PokemonApp.Migrations
                         {
                             Id = 3,
                             BirthDate = new DateTime(1999, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2024, 3, 31, 15, 47, 33, 829, DateTimeKind.Local).AddTicks(7806),
+                            CreatedAt = new DateTime(2024, 3, 31, 20, 8, 1, 577, DateTimeKind.Local).AddTicks(2477),
                             Name = "Jonathan",
                             OwnerId = 2
                         });
@@ -211,9 +211,6 @@ namespace PokemonApp.Migrations
                         .HasColumnType("int")
                         .HasColumnName("rating");
 
-                    b.Property<int>("ReviewerId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ReviwerId")
                         .HasColumnType("int")
                         .HasColumnName("reviewer_id");
@@ -232,7 +229,7 @@ namespace PokemonApp.Migrations
 
                     b.HasIndex("PokemonId");
 
-                    b.HasIndex("ReviewerId");
+                    b.HasIndex("ReviwerId");
 
                     b.ToTable("Reviews");
                 });
@@ -308,7 +305,7 @@ namespace PokemonApp.Migrations
 
                     b.HasOne("PokemonApp.Entities.Reviewer", "Reviewer")
                         .WithMany("Reviews")
-                        .HasForeignKey("ReviewerId")
+                        .HasForeignKey("ReviwerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

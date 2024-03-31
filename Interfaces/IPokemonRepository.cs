@@ -8,6 +8,5 @@ namespace PokemonApp.Interfaces
         Task<Pokemon?> GetSinglePokemon(int id);
         Task DeletePokemonByEntity(Pokemon pokemon);
         Task<Pokemon?> CreatePokemon(Pokemon pokemon);
-        Task SaveChanges();
     }
 }
