@@ -9,5 +9,6 @@ namespace PokemonApp.Interfaces
         Task<ResponsePokemonDTO> DeletePokemon(int id);
         Task<IEnumerable<ResponsePokemonDTO>> GetPokemons();
         Task<Pokemon> GetSinglePokemon(int id);
+        Task<ResponsePokemonDTO> UpdatePokemon(RequestPokemonDTO requestPokemonDTO, int id);
     }
 }

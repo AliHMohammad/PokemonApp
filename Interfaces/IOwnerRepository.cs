@@ -6,5 +6,6 @@ namespace PokemonApp.Interfaces
     {
         Task<List<Owner>> GetOwners();
         Task<Owner?> GetSingleOwner(int id);
+        Task<bool> OwnerExists(int id);
     }
 }

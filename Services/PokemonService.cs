@@ -9,10 +9,12 @@ namespace PokemonApp.Services
     public class PokemonService : IPokemonService
     {
         private readonly IPokemonRepository _pokemonRepository;
+        private readonly IOwnerRepository _ownerRepository;
 
-        public PokemonService(IPokemonRepository pokemonRepository)
+        public PokemonService(IPokemonRepository pokemonRepository, IOwnerRepository ownerRepository)
         {
-            this._pokemonRepository = pokemonRepository;
+            _pokemonRepository = pokemonRepository;
+            _ownerRepository = ownerRepository;
         }
 
         public async Task<IEnumerable<ResponsePokemonDTO>> GetPokemons()
@@ -48,6 +50,35 @@ namespace PokemonApp.Services
                 ?? throw new BadRequestException("Could not create new pokemon");
 
             return createdPokemon.ToDTO();
+        }
+
+
+
+        public async Task<ResponsePokemonDTO> UpdatePokemon(RequestPokemonDTO requestPokemonDTO, int id)
+        {
+
+
+
+            var pokemonDb = await _pokemonRepository.GetSinglePokemon(id)
+                ?? throw new NotFoundException($"Pokemon with id {id} not found");
+
+            pokemonDb.Name = requestPokemonDTO.Name;
+            pokemonDb.BirthDate = requestPokemonDTO.BirthDate;
+
+            // Ikke er i request body, så defaulter den til 0, i stedet for null i spring boot
+            // Hvis ownerId er med, så gå i if-statement
+            if (requestPokemonDTO.OwnerId != 0)
+            {
+                var ownerId = requestPokemonDTO.OwnerId;
+
+                if (!await _ownerRepository.OwnerExists(ownerId))
+                    throw new BadRequestException($"ownerId {ownerId} not found");
+
+                pokemonDb.OwnerId = ownerId;
+            }
+
+            await _pokemonRepository.SaveChanges();
+            return (await _pokemonRepository.GetSinglePokemon(id)).ToDTO();
         }
 
     }

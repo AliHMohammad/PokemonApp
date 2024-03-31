@@ -7,5 +7,6 @@ namespace PokemonApp.Interfaces
 
         Task<IEnumerable<ResponseOwnerDTO>> GetOwners();
         Task<ResponseOwnerDetailedDTO> GetSingleOwner(int id);
+
     }
 }

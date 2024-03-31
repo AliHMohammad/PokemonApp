@@ -16,7 +16,7 @@ namespace PokemonApp.Controllers
 
         public PokemonController(IPokemonService pokemonService)
         {
-            this._pokemonService = pokemonService;
+            _pokemonService = pokemonService;
         }
 
 
@@ -26,11 +26,11 @@ namespace PokemonApp.Controllers
             return Ok(await _pokemonService.GetPokemons());
         }
 
-
+        //Undlad :int, hvis din parameter er en string
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Pokemon>> GetSinglePokemon(int id)
         {
-            if (id < 1) throw new BadRequestException($"Pokemon with ID {id} not found");
+            if (id < 1) throw new NotFoundException($"Pokemon with ID {id} not found");
 
             return Ok(await _pokemonService.GetSinglePokemon(id));
         }
@@ -38,7 +38,7 @@ namespace PokemonApp.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult<ResponsePokemonDTO>> DeletePokemon(int id)
         {
-            if (id < 1) throw new BadRequestException($"Pokemon with ID {id} not found");
+            if (id < 1) throw new NotFoundException($"Pokemon with ID {id} not found");
 
             var pokemon = await _pokemonService.DeletePokemon(id);
 
@@ -47,7 +47,7 @@ namespace PokemonApp.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<ResponsePokemonDTO>> CreatePokemon(RequestPokemonDTO requestPokemonDTO)
+        public async Task<ActionResult<ResponsePokemonDTO>> CreatePokemon([FromBody] RequestPokemonDTO requestPokemonDTO)
         {
             var pokemonResponse = await _pokemonService.CreatePokemon(requestPokemonDTO);
 
@@ -57,6 +57,18 @@ namespace PokemonApp.Controllers
             // 3. ResponseBody, i vores tilfælde DTO'en
             return CreatedAtAction(nameof(GetSinglePokemon), new { id = pokemonResponse.Id }, pokemonResponse);
         }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult<ResponsePokemonDTO>> UpdatePokemon([FromBody] RequestPokemonDTO requestPokemonDTO, int id)
+        {
+            if (id < 1) throw new NotFoundException($"Pokemon with ID {id} not found");
+
+            return Ok(await _pokemonService.UpdatePokemon(requestPokemonDTO, id));
+        }
+
+
+
+
     }
 }
 

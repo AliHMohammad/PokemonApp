@@ -29,6 +29,11 @@ namespace PokemonApp.Repositories
                 .FirstOrDefaultAsync(o => o.Id == id);
         }
 
+        public async Task<bool> OwnerExists(int id)
+        {
+            return await _dataContext.Owners.AnyAsync(o => o.Id == id);
+        }
+
 
     }
 }
